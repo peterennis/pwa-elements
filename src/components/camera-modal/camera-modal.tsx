@@ -7,6 +7,7 @@ import { h, Event, EventEmitter, Component, Method } from '@stencil/core';
 })
 export class PWACameraModal {
   @Event() onPhoto: EventEmitter;
+  @Event() noDeviceError: EventEmitter;
 
   _modal: HTMLElement;
 
@@ -20,6 +21,10 @@ export class PWACameraModal {
       }
       const photo = e.detail;
       this.onPhoto.emit(photo);
+    });
+
+    camera.addEventListener('noDeviceError', async (e: any) => {
+      this.noDeviceError.emit(e);
     });
 
     document.body.append(camera);
